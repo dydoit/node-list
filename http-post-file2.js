@@ -3,7 +3,7 @@ const util = require('util')
 const fs = require('fs')
 const multiparty = require('multiparty')
 http.createServer((req, res) => {
-  console.log(req.url)
+  res.setHeader('access-control-allow-origin', '*')
   if(req.url == '/upload') {
     var form = new multiparty.Form()
     //设置编辑
@@ -12,10 +12,9 @@ http.createServer((req, res) => {
     form.uploadDir = 'upload/'
     //设置单文件大小限制
     form.maxFilesSize = 2 * 1024 * 1024;
-    form.on('file', (name, value) => {
-      console.log('触发没')
-      console.log(name, value)
-    })
+    // form.on('file', (name, value) => {
+    //   console.log(name, value)
+    // })
     form.parse(req, (err, fileds, files) => {
       if(err) {
         console.log(err)
@@ -23,8 +22,8 @@ http.createServer((req, res) => {
       console.log(fileds)
       console.log(files)
       res.writeHead(200, {'content-type': 'text/plain'})
-      res.write('received upload')
-      res.end(util.inspect({fileds: fileds, files: files}))
+      res.write(JSON.stringify({success: true, data: {fileds: fileds, files: files}}))
+      res.end()
     })
   }
  

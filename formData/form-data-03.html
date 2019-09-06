@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <input type="text" id="username"/>
+    <input type="password" id="password">
+    <input type="file" id="f1"> 
+    <button id="sub">提交</button>
+  </div>
+  <script>
+    let sub = document.getElementById('sub')
+    sub.onclick= function() {
+      let formData = new FormData()
+      let xhr = new XMLHttpRequest()
+      formData.append('username', document.getElementById('username').value)
+      formData.append('password', document.getElementById('password').value)
+      formData.append('f1', document.getElementById('f1').files[0])
+      fetch('http://localhost:3000/upload', {
+        method: 'POST',
+        body: formData
+      }).then(res =>res.json()).then(rs =>{
+        console.log(rs)
+      })
+    }
+  </script>
+</body>
+</html>

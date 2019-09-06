@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <form action="http://localhost:3000/upload" method="post" id="form">
+    <input type="text" name="username">
+    <input type="password" name="password">
+    <input type="file" name="f1">
+    <input type="submit" value="提交" id="btn">
+  </form>
+  <script>  
+    // 直接使用form标签套，最简单
+    let btn = document.getElementById('btn')
+    btn.onclick = function() {
+      let form = document.getElementById('form')
+      let formData = new FormData(form)
+      let xhr = new XMLHttpRequest()
+      xhr.open(form.method, form.action)
+      xhr.send(formData)
+      xhr.onreadystatechange = function() {
+        if( xhr.status==200) {
+          console.log('成功')
+          console.log(xhr.responseText)
+        }
+      }
+      return false
+    }
+  </script>
+</body>
+</html>
