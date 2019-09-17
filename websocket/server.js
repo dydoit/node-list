@@ -7,7 +7,7 @@ server.listen(8080)
 let wsServer = io.listen(server)
 wsServer.on('connection', sock => {
     // 可以主动发数据 sock.emit('name',数据)
-    // 也可以几首数据 sock.on('客户端传过来的事件名', function(客户端传过来的数据){})
+    // 也可以接收数据 sock.on('客户端传过来的事件名', function(客户端传过来的数据){})
     sock.on('aaa', (a, b) => {
         console.log(a, b, a+b)
     })

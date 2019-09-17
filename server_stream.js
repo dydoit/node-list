@@ -2,6 +2,7 @@ const http = require('http')
 const zlib = require('zlib')
 const url = require('url')
 const fs = require('fs')
+const path = require('path')
 http.createServer((req, res) => {
   let {pathname} = url.parse(req.url, true)
   fs.stat('./'+pathname, err => {
@@ -12,11 +13,11 @@ http.createServer((req, res) => {
       res.end()
     } else {
       res.setHeader('content-encoding', 'gzip') // 一定要告诉浏览器后端开启了压缩
-      let rs = fs.createReadStream('./'+pathname)
+      let rs = fs.createReadStream(path.resolve(__dirname, `/node-list/${pathname}`))
       rs.on('error', err=> {})
       let gz = zlib.createGzip()
       // rs.pipe(res)
       rs.pipe(gz).pipe(res)
     }
   })
-}).listen(8080)
+}).listen(3000)
